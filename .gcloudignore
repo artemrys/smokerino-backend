@@ -1,0 +1,8 @@
+LICENSE
+README.md
+openapi.yaml
+.gitignore
+.git/
+.idea/
+.pytest_cache/
+test-requirements.txt
