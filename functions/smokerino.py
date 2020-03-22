@@ -4,13 +4,12 @@ import logging
 import flask
 from google.cloud import firestore
 
-firestore_client = firestore.Client()
-
 
 def get_cigarette(request: flask.Request) -> flask.Response:
     if request.method != "GET":
         return flask.make_response(flask.make_response("Only GET requests"),
                                    405)
+    firestore_client = firestore.Client()
     user_id = request.args.get("user_id")
     cigarette_ref = firestore_client.collection(f"cigarettes/{user_id}/smoked")
     smoked_cigarettes = len(list(cigarette_ref.get()))
@@ -22,6 +21,7 @@ def get_cigarette(request: flask.Request) -> flask.Response:
 def add_cigarette(request: flask.Request):
     if request.method != "POST":
         return flask.make_response(flask.Response("Only POST requests"), 405)
+    firestore_client = firestore.Client()
     user_id = request.args.get("user_id")
     user_id_ref = firestore_client.collection("cigarettes").document(user_id)
     user_id_ref.set({
